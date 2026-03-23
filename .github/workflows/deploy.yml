@@ -3,7 +3,7 @@ name: Deploy Rsbuild to GitHub Pages
 on:
   # Runs on pushes targeting your main/feature branch
   push:
-    branches: ["feature/base"]  # Keep your branch name
+    branches: ['feature/base'] # Keep your branch name
   workflow_dispatch:
 
 # Sets permissions to allow deployment to GitHub Pages
@@ -14,7 +14,7 @@ permissions:
 
 # Allow only one concurrent deployment
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
@@ -38,7 +38,7 @@ jobs:
         env:
           # Pass Supabase keys to the build process
           PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY: ${{ secrets.PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -46,7 +46,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'  # ← Important: upload the compiled dist folder
+          path: './dist' # ← Important: upload the compiled dist folder
 
   deploy:
     environment:
