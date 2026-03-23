@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import * as React from 'react';
 import { supabase } from '../../utils/supbase';
+import { Tables } from '../supabase';
 
 export const Route = createFileRoute('/')({
   component: HomeComponent,
@@ -11,7 +12,8 @@ export const Route = createFileRoute('/')({
 });
 
 function HomeComponent() {
-  const { objects } = Route.useLoaderData();
+  const objects = Route.useLoaderData() as Tables<'objects'>[];
+
   return (
     <div className="p-2">
       <h3>Welcome Home!</h3>
