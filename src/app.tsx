@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { RouterProvider, createRouter } from '@tanstack/react-router';
+import {
+  RouterProvider,
+  createHashHistory,
+  createRouter,
+} from '@tanstack/react-router';
 
 import { routeTree } from './routeTree.gen';
 import './styles.css';
@@ -9,7 +13,8 @@ const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
   scrollRestoration: true,
-  basepath: '/jkdnl',
+  basepath: '/industrial-legacy',
+  history: createHashHistory(),
 });
 
 // Register things for typesafety

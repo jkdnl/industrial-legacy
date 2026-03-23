@@ -4,7 +4,8 @@ import { tanstackRouter } from '@tanstack/router-plugin/rspack';
 
 export default defineConfig({
   output: {
-    assetPrefix: '/jkdnl/',
+    assetPrefix: '/industrial-legacy/',
+    cleanDistPath: true,
   },
   distPath: {
     root: 'dist',
