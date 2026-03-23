@@ -24,7 +24,6 @@ function RouteComponent() {
       <div className="max-w-[1200px] h-screen m-auto py-4 flex flex-col gap-4">
         <div
           style={{
-            backgroundImage: `url(${event?.headline_img_url})`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
@@ -37,7 +36,7 @@ function RouteComponent() {
           <div
             className={`flex flex-col py-2 align-center justify-center text-center h-fit w-full transition`}
           >
-            <h2 className="text-4xl font-bold">{event.name}</h2>
+            <h2 className="text-4xl font-bold">{event?.name || ''}</h2>
           </div>
         </div>
         <div className="flex gap-4 w-full">
