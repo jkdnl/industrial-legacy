@@ -6,6 +6,14 @@ export default defineConfig({
   output: {
     assetPrefix: './',
   },
+  distPath: {
+    root: 'dist',
+    js: 'static/js',
+    css: 'static/css',
+  },
+  server: {
+    base: './',
+  },
   plugins: [pluginReact()],
   tools: {
     rspack: {
