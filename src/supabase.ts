@@ -56,28 +56,37 @@ export type Database = {
       };
       events: {
         Row: {
+          address: string | null;
           created_at: string;
+          desc: string | null;
           end_at: string | null;
           format_id: number | null;
           id: number;
+          name: string | null;
           object_id: number | null;
           start_at: string | null;
           tags: string[] | null;
         };
         Insert: {
+          address?: string | null;
           created_at?: string;
+          desc?: string | null;
           end_at?: string | null;
           format_id?: number | null;
           id?: number;
+          name?: string | null;
           object_id?: number | null;
           start_at?: string | null;
           tags?: string[] | null;
         };
         Update: {
+          address?: string | null;
           created_at?: string;
+          desc?: string | null;
           end_at?: string | null;
           format_id?: number | null;
           id?: number;
+          name?: string | null;
           object_id?: number | null;
           start_at?: string | null;
           tags?: string[] | null;
@@ -129,6 +138,7 @@ export type Database = {
         Row: {
           city_id: number;
           desc: string | null;
+          headline_img_url: string | null;
           id: number;
           name: string | null;
           status: number | null;
@@ -137,6 +147,7 @@ export type Database = {
         Insert: {
           city_id: number;
           desc?: string | null;
+          headline_img_url?: string | null;
           id?: number;
           name?: string | null;
           status?: number | null;
@@ -145,6 +156,7 @@ export type Database = {
         Update: {
           city_id?: number;
           desc?: string | null;
+          headline_img_url?: string | null;
           id?: number;
           name?: string | null;
           status?: number | null;
