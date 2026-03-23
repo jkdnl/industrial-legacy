@@ -9,7 +9,7 @@ const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
   scrollRestoration: true,
-  basepath: './',
+  basepath: '/jkdnl',
 });
 
 // Register things for typesafety

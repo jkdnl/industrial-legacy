@@ -4,15 +4,12 @@ import { tanstackRouter } from '@tanstack/router-plugin/rspack';
 
 export default defineConfig({
   output: {
-    assetPrefix: './',
+    assetPrefix: '/jkdnl/',
   },
   distPath: {
     root: 'dist',
     js: 'static/js',
     css: 'static/css',
-  },
-  server: {
-    base: './',
   },
   plugins: [pluginReact()],
   tools: {
