@@ -4,7 +4,7 @@ import { tanstackRouter } from '@tanstack/router-plugin/rspack';
 
 export default defineConfig({
   output: {
-    assetPrefix: '/industrial-legacy/',
+    assetPrefix: './',
   },
   plugins: [pluginReact()],
   tools: {
