@@ -1,6 +1,9 @@
 import { Card, Flex, Heading, Text, Box } from '@radix-ui/themes';
+import { parseMediaUrls } from './media';
 
 export function ObjectCardCompact({ object }) {
+  const [coverImage] = parseMediaUrls(object.headline_img_url);
+
   return (
     <Card
       className="object-card-compact"
@@ -18,8 +21,8 @@ export function ObjectCardCompact({ object }) {
           style={{
             width: 132,
             minWidth: 132,
-            backgroundImage: object.headline_img_url
-              ? `url(${object.headline_img_url})`
+            backgroundImage: coverImage
+              ? `url(${coverImage})`
               : 'linear-gradient(135deg, var(--app-surface-subtle), transparent)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -61,6 +64,23 @@ export function ObjectCardCompact({ object }) {
           >
             {object.desc || 'Описание объекта будет добавлено позже.'}
           </Text>
+          <Flex gap="3" wrap="wrap">
+            {object.statusLabel && (
+              <Text size="1" style={{ color: 'var(--app-text-muted)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
+                {object.statusLabel}
+              </Text>
+            )}
+            {object.typeLabel && (
+              <Text size="1" style={{ color: 'var(--app-text-muted)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
+                {object.typeLabel}
+              </Text>
+            )}
+            {object.cityLabel && (
+              <Text size="1" style={{ color: 'var(--app-text-muted)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
+                {object.cityLabel}
+              </Text>
+            )}
+          </Flex>
         </Flex>
       </Flex>
     </Card>

@@ -1,61 +1,111 @@
-import { useMemo, useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 
 import { ObjectFilters } from '../features/objectsList/ObjectFilters';
 import { ObjectList } from '../features/objectsList/ObjectsList';
 import { supabase } from '../shared/lib/supabase';
 import { useInfiniteVisibleItems } from '../shared/lib/useInfiniteVisibleItems';
+import {
+  serializeObjectsSearch,
+  validateObjectsSearch,
+  type ObjectsSearchState,
+} from '../shared/lib/objectFilters';
 import { Section } from '../shared/ui/Section';
 import { Tables } from '../types/supabase';
 
-type ObjectsRouteData = {
-  objects: Tables<'objects'>[];
-  objectTypes: Tables<'object_types'>[];
+type ObjectListItem = Tables<'objects'> & {
+  statusRef: { name: string } | null;
+  typeRef: { name: string } | null;
+  cityRef: { name: string } | null;
+  statusLabel: string | null;
+  typeLabel: string | null;
+  cityLabel: string | null;
 };
 
-export const Route = createFileRoute('/objects')({
-  loader: async (): Promise<ObjectsRouteData> => {
-    const [{ data: objects }, { data: objectTypes }] = await Promise.all([
-      supabase.from('objects').select('*'),
-      supabase.from('object_types').select('*'),
-    ]);
+type ObjectsRouteData = {
+  objects: ObjectListItem[];
+  objectTypes: Tables<'object_types'>[];
+  statuses: Tables<'object_status'>[];
+  cities: Tables<'cities'>[];
+};
 
-    return {
-      objects: objects ?? [],
-      objectTypes: objectTypes ?? [],
-    };
-  },
+async function loadObjects({
+  deps,
+}: {
+  deps: ObjectsSearchState;
+}): Promise<ObjectsRouteData> {
+  let objectsQuery = supabase.from('objects').select(`
+      *,
+      statusRef:object_status(name),
+      typeRef:object_types(name),
+      cityRef:cities(name)
+    `);
+
+  if (deps.q.trim().length > 0) {
+    const query = deps.q.trim();
+    objectsQuery = objectsQuery.or(
+      `name.ilike.%${query}%,desc.ilike.%${query}%`,
+    );
+  }
+
+  if (deps.typeIds.length > 0) {
+    objectsQuery = objectsQuery.in('type_id', deps.typeIds);
+  }
+
+  if (deps.statusIds.length > 0) {
+    objectsQuery = objectsQuery.in('status', deps.statusIds);
+  }
+
+  if (deps.cityIds.length > 0) {
+    objectsQuery = objectsQuery.in('city_id', deps.cityIds);
+  }
+
+  const [
+    { data: objects },
+    { data: objectTypes },
+    { data: statuses },
+    { data: cities },
+  ] = await Promise.all([
+    objectsQuery.order('name'),
+    supabase.from('object_types').select('*').order('name'),
+    supabase.from('object_status').select('*').order('name'),
+    supabase.from('cities').select('*').order('name'),
+  ]);
+
+  const normalizedObjects =
+    (
+      objects as
+        | (Tables<'objects'> & {
+            statusRef: { name: string } | null;
+            typeRef: { name: string } | null;
+            cityRef: { name: string } | null;
+          })[]
+        | null
+    )?.map((objectItem) => ({
+      ...objectItem,
+      statusLabel: objectItem.statusRef?.name ?? null,
+      typeLabel: objectItem.typeRef?.name ?? null,
+      cityLabel: objectItem.cityRef?.name ?? null,
+    })) ?? [];
+
+  return {
+    objects: normalizedObjects,
+    objectTypes: objectTypes ?? [],
+    statuses: statuses ?? [],
+    cities: cities ?? [],
+  };
+}
+
+export const Route = createFileRoute('/objects')({
+  validateSearch: validateObjectsSearch,
+  loaderDeps: ({ search }) => search,
+  loader: loadObjects,
   component: Page,
 });
 
 function Page() {
-  const { objects, objectTypes } = Route.useLoaderData();
-
-  const [search, setSearch] = useState('');
-  const [activeTypes, setActiveTypes] = useState<number[]>([]);
-
-  function toggleType(id: number) {
-    setActiveTypes((prev) =>
-      prev.includes(id) ? prev.filter((typeId) => typeId !== id) : [...prev, id],
-    );
-  }
-
-  const filteredObjects = useMemo(() => {
-    const normalizedSearch = search.trim().toLowerCase();
-
-    return objects.filter((objectItem) => {
-      const matchesSearch =
-        normalizedSearch.length === 0 ||
-        objectItem.name?.toLowerCase().includes(normalizedSearch) ||
-        objectItem.desc?.toLowerCase().includes(normalizedSearch);
-
-      const matchesType =
-        activeTypes.length === 0 ||
-        (objectItem.type_id != null && activeTypes.includes(objectItem.type_id));
-
-      return matchesSearch && matchesType;
-    });
-  }, [activeTypes, objects, search]);
+  const { objects, objectTypes, statuses, cities } = Route.useLoaderData();
+  const search = Route.useSearch();
+  const navigate = useNavigate({ from: Route.fullPath });
 
   const {
     visibleItems: visibleObjects,
@@ -63,16 +113,16 @@ function Page() {
     hasMore,
     loadMoreRef,
   } = useInfiniteVisibleItems({
-    items: filteredObjects,
+    items: objects,
     pageSize: 10,
-    resetKey: `${search}-${activeTypes.join(',')}`,
+    resetKey: JSON.stringify(search),
   });
 
   return (
     <Section
       eyebrow="Объекты"
       title="Каталог индустриального наследия"
-      description="Список площадок, сооружений и производственных следов, собранный как навигационный архив. Фильтрация и поиск работают как инструмент быстрого просмотра, а не как декоративная надстройка."
+      description="Каталог собирает объекты по типу, состоянию и городу, чтобы быстрее находить площадки с нужной историей и текущим контекстом."
     >
       <div
         className="industrial-panel"
@@ -82,10 +132,21 @@ function Page() {
       >
         <ObjectFilters
           objectTypes={objectTypes}
+          statuses={statuses}
+          cities={cities}
           search={search}
-          setSearch={setSearch}
-          activeTypes={activeTypes}
-          toggleType={toggleType}
+          onApply={(nextSearch) =>
+            navigate({
+              search: serializeObjectsSearch(nextSearch),
+              replace: true,
+            })
+          }
+          onReset={() =>
+            navigate({
+              search: {},
+              replace: true,
+            })
+          }
         />
       </div>
 
@@ -105,9 +166,11 @@ function Page() {
             borderBottom: '1px solid var(--app-border)',
           }}
         >
-          <span className="industrial-eyebrow">Найдено {filteredObjects.length}</span>
-          <span style={{ color: 'var(--app-text-secondary)', fontSize: '0.92rem' }}>
-            Показано {visibleObjects.length} из {filteredObjects.length}
+          <span className="industrial-eyebrow">Найдено {objects.length}</span>
+          <span
+            style={{ color: 'var(--app-text-secondary)', fontSize: '0.92rem' }}
+          >
+            Показано {visibleObjects.length} из {objects.length}
           </span>
         </div>
         <div style={{ padding: 20 }}>
@@ -121,7 +184,12 @@ function Page() {
               textAlign: 'center',
             }}
           >
-            <span style={{ color: 'var(--app-text-secondary)', fontSize: '0.92rem' }}>
+            <span
+              style={{
+                color: 'var(--app-text-secondary)',
+                fontSize: '0.92rem',
+              }}
+            >
               {hasMore
                 ? `Показано ${visibleCount} объектов. Прокрутите ниже, чтобы загрузить ещё 10.`
                 : `Все объекты показаны: ${visibleCount}.`}
