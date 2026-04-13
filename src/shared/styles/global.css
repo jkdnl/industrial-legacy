@@ -213,6 +213,15 @@ select {
   height: 100%;
 }
 
+.header-menu-toggle {
+  display: none !important;
+}
+
+.mobile-nav,
+.mobile-nav-overlay {
+  display: none;
+}
+
 .tag:hover {
   border-color: var(--app-accent);
 }
@@ -224,5 +233,222 @@ select {
 
   .industrial-panel::after {
     inset: 8px;
+  }
+
+  .header-brand {
+    min-width: 0;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .header-nav--desktop {
+    display: none !important;
+  }
+
+  .header-menu-toggle {
+    display: inline-flex !important;
+  }
+
+  .mobile-nav-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 8, 10, 0.48);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 29;
+  }
+
+  .mobile-nav-overlay--open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-nav {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(88vw, 360px);
+    height: 100vh;
+    padding: 88px 16px 20px;
+    background: var(--app-surface-strong);
+    border-left: 1px solid var(--app-border);
+    box-shadow: var(--app-shadow);
+    transform: translateX(100%);
+    transition: transform 0.22s ease;
+    z-index: 30;
+    overflow: auto;
+  }
+
+  .mobile-nav--open {
+    transform: translateX(0);
+  }
+
+  .mobile-nav__link {
+    display: block;
+  }
+
+  .object-filters__toolbar {
+    align-items: stretch;
+  }
+
+  .object-filters__search,
+  .object-filters__button {
+    width: 100%;
+  }
+
+  .catalog-summary {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .object-card {
+    min-height: 280px !important;
+  }
+
+  .object-card__content h1,
+  .object-card__content h2 {
+    font-size: clamp(1.9rem, 8vw, 2.8rem) !important;
+  }
+
+  .object-card__content {
+    align-items: flex-start !important;
+  }
+
+  .object-card-compact__layout {
+    flex-direction: column;
+    gap: 0 !important;
+  }
+
+  .object-card-compact__media {
+    width: 100% !important;
+    min-width: 100% !important;
+    min-height: 164px;
+  }
+
+  .object-card-compact__body {
+    padding: 16px !important;
+  }
+
+  .object-card-compact__meta {
+    gap: 8px !important;
+  }
+
+  .object-hero {
+    min-height: 420px !important;
+  }
+
+  .object-hero h1,
+  .object-hero h2 {
+    font-size: clamp(2rem, 9vw, 3.4rem) !important;
+    max-width: 100% !important;
+  }
+
+  .object-hero__controls {
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 12px !important;
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 10px;
+  }
+
+  .object-hero__arrows,
+  .object-hero__dots {
+    justify-content: center;
+  }
+
+  .object-detail-panel,
+  .event-detail-panel,
+  .event-hero-panel,
+  .infinite-status {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .industrial-meta-item {
+    min-width: 100%;
+  }
+
+  .section-title {
+    font-size: clamp(1.55rem, 9vw, 2.4rem);
+    line-height: 0.98;
+  }
+
+  .section-copy {
+    font-size: 0.96rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-frame {
+    padding: 16px 12px 44px;
+  }
+
+  .industrial-panel::after {
+    inset: 6px;
+  }
+
+  .industrial-eyebrow,
+  .section-kicker {
+    letter-spacing: 0.18em;
+  }
+
+  .object-hero {
+    min-height: 360px !important;
+  }
+
+  .object-card {
+    min-height: 240px !important;
+  }
+
+  .object-card__content {
+    padding: 16px 14px !important;
+  }
+
+  .object-card__content h1,
+  .object-card__content h2 {
+    font-size: clamp(1.55rem, 8vw, 2.1rem) !important;
+  }
+
+  .object-card__content p {
+    font-size: 0.92rem !important;
+  }
+
+  .object-card-compact__media {
+    min-height: 132px;
+  }
+
+  .object-card-compact__body {
+    padding: 14px !important;
+  }
+
+  .event-hero-panel,
+  .object-detail-panel,
+  .event-detail-panel,
+  .infinite-status {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .object-hero__controls {
+    gap: 8px;
+  }
+
+  .object-hero__dots button {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  .mobile-nav {
+    width: calc(100vw - 24px);
+    padding-top: 84px;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 }

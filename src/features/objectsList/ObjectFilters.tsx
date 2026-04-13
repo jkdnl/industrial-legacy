@@ -34,7 +34,12 @@ export function ObjectFilters({
 
   return (
     <Flex direction="column" gap="4">
-      <Flex direction={{ initial: 'column', md: 'row' }} gap="3" align={{ md: 'center' }}>
+      <Flex
+        direction={{ initial: 'column', md: 'row' }}
+        gap="3"
+        align={{ md: 'center' }}
+        className="object-filters__toolbar"
+      >
         <TextField.Root
           value={draft.q}
           onChange={(event) =>
@@ -45,11 +50,13 @@ export function ObjectFilters({
           }
           placeholder="Название, история, описание"
           style={{ flex: 1 }}
+          className="object-filters__search"
         />
 
         <Popover.Root>
           <Popover.Trigger>
             <Button
+              className="object-filters__button"
               variant="soft"
               style={{
                 minWidth: 172,
@@ -72,8 +79,11 @@ export function ObjectFilters({
           </Popover.Trigger>
 
           <Popover.Content
-            width="380px"
+            width="var(--popover-content-available-width)"
             style={{
+              width: 'min(380px, calc(100vw - 32px))',
+              maxHeight: 'min(70vh, 560px)',
+              overflow: 'auto',
               padding: 18,
               background: 'var(--app-surface-strong)',
               border: '1px solid var(--app-border)',

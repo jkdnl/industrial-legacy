@@ -41,7 +41,7 @@ function RouteComponent() {
   return (
     <Flex direction="column" gap="6">
       <Box
-        className="industrial-panel"
+        className="industrial-panel event-hero-panel"
         style={{
           padding: '28px 24px',
           background:
@@ -76,7 +76,7 @@ function RouteComponent() {
 
       <Flex direction={{ initial: 'column', lg: 'row' }} gap="6" align="stretch">
         <Box
-          className="industrial-panel"
+          className="industrial-panel event-detail-panel"
           style={{
             flex: 1.4,
             padding: '24px 20px',
@@ -98,7 +98,7 @@ function RouteComponent() {
         </Box>
 
         <Box
-          className="industrial-panel"
+          className="industrial-panel event-detail-panel"
           style={{
             flex: 0.9,
             padding: '24px 20px',

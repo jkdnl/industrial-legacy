@@ -157,6 +157,7 @@ function Page() {
         }}
       >
         <div
+          className="catalog-summary"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -177,7 +178,7 @@ function Page() {
           <ObjectList objects={visibleObjects} variant="compact" />
           <div
             ref={loadMoreRef}
-            className="industrial-panel"
+            className="industrial-panel infinite-status"
             style={{
               padding: '16px 18px',
               marginTop: 20,

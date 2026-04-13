@@ -16,8 +16,9 @@ export function ObjectCardCompact({ object }) {
         minHeight: 100,
       }}
     >
-      <Flex gap="4" align="stretch">
+      <Flex gap="4" align="stretch" className="object-card-compact__layout">
         <Box
+          className="object-card-compact__media"
           style={{
             width: 132,
             minWidth: 132,
@@ -30,7 +31,13 @@ export function ObjectCardCompact({ object }) {
           }}
         />
 
-        <Flex direction="column" gap="3" p="4" style={{ minWidth: 0, flex: 1 }}>
+        <Flex
+          direction="column"
+          gap="3"
+          p="4"
+          style={{ minWidth: 0, flex: 1 }}
+          className="object-card-compact__body"
+        >
           <Text
             size="1"
             style={{
@@ -64,19 +71,40 @@ export function ObjectCardCompact({ object }) {
           >
             {object.desc || 'Описание объекта будет добавлено позже.'}
           </Text>
-          <Flex gap="3" wrap="wrap">
+          <Flex gap="3" wrap="wrap" className="object-card-compact__meta">
             {object.statusLabel && (
-              <Text size="1" style={{ color: 'var(--app-text-muted)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
+              <Text
+                size="1"
+                style={{
+                  color: 'var(--app-text-muted)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.12em',
+                }}
+              >
                 {object.statusLabel}
               </Text>
             )}
             {object.typeLabel && (
-              <Text size="1" style={{ color: 'var(--app-text-muted)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
+              <Text
+                size="1"
+                style={{
+                  color: 'var(--app-text-muted)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.12em',
+                }}
+              >
                 {object.typeLabel}
               </Text>
             )}
             {object.cityLabel && (
-              <Text size="1" style={{ color: 'var(--app-text-muted)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
+              <Text
+                size="1"
+                style={{
+                  color: 'var(--app-text-muted)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.12em',
+                }}
+              >
                 {object.cityLabel}
               </Text>
             )}

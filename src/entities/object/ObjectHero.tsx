@@ -27,7 +27,7 @@ export function ObjectHero({ object }) {
   return (
     <Flex direction="column" gap="6">
       <Box
-        className="industrial-panel"
+        className="industrial-panel object-hero"
         style={{
           minHeight: 540,
           position: 'relative',
@@ -99,6 +99,7 @@ export function ObjectHero({ object }) {
 
         {mediaUrls.length > 1 && (
           <Flex
+            className="object-hero__controls"
             align="center"
             justify="between"
             style={{
@@ -109,7 +110,7 @@ export function ObjectHero({ object }) {
               zIndex: 2,
             }}
           >
-            <Flex gap="2">
+            <Flex gap="2" className="object-hero__arrows">
               <IconButton variant="solid" onClick={previousSlide} aria-label="Предыдущее изображение">
                 <ChevronLeftIcon />
               </IconButton>
@@ -118,7 +119,7 @@ export function ObjectHero({ object }) {
               </IconButton>
             </Flex>
 
-            <Flex gap="2">
+            <Flex gap="2" className="object-hero__dots">
               {mediaUrls.map((url, index) => (
                 <button
                   key={`${url}-${index}`}
@@ -142,7 +143,7 @@ export function ObjectHero({ object }) {
 
       <Flex direction={{ initial: 'column', lg: 'row' }} gap="6">
         <Flex
-          className="industrial-panel"
+          className="industrial-panel object-detail-panel"
           direction="column"
           gap="4"
           px={{ initial: '4', md: '6' }}
@@ -189,7 +190,7 @@ export function ObjectHero({ object }) {
         </Flex>
 
         <Flex
-          className="industrial-panel"
+          className="industrial-panel object-detail-panel"
           direction="column"
           gap="4"
           px={{ initial: '4', md: '6' }}
