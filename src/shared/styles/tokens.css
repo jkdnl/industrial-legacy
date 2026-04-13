@@ -1,0 +1,87 @@
+:root {
+  color-scheme: light;
+
+  --app-bg: #ebe8df;
+  --app-bg-elevated: #f6f1e7;
+  --app-surface: rgba(255, 252, 245, 0.84);
+  --app-surface-strong: #fffdf7;
+  --app-surface-subtle: rgba(67, 67, 62, 0.06);
+
+  --app-text-primary: #171614;
+  --app-text-secondary: #5e5b54;
+  --app-text-muted: #79756b;
+
+  --app-border: rgba(38, 36, 31, 0.14);
+  --app-border-strong: rgba(38, 36, 31, 0.28);
+  --app-overlay: linear-gradient(
+    180deg,
+    rgba(15, 16, 15, 0.1) 0%,
+    rgba(15, 16, 15, 0.8) 100%
+  );
+  --app-overlay-soft: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(23, 22, 20, 0.12) 100%
+  );
+
+  --app-accent: #b0671f;
+  --app-accent-strong: #8c4d11;
+  --app-accent-soft: rgba(176, 103, 31, 0.14);
+  --app-success: #2e5644;
+
+  --app-grid-line: rgba(41, 38, 33, 0.08);
+  --app-shadow: 0 20px 60px rgba(47, 39, 24, 0.08);
+
+  --color-background: var(--app-bg);
+  --color-panel: var(--app-surface);
+  --color-panel-solid: var(--app-surface-strong);
+  --color-panel-translucent: var(--app-surface);
+  --gray-1: var(--app-bg);
+  --gray-2: var(--app-bg-elevated);
+  --gray-3: var(--app-surface-subtle);
+  --gray-12: var(--app-text-primary);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --app-bg: #111315;
+  --app-bg-elevated: #171a1d;
+  --app-surface: rgba(21, 24, 27, 0.86);
+  --app-surface-strong: #191d20;
+  --app-surface-subtle: rgba(255, 255, 255, 0.045);
+
+  --app-text-primary: #ece6da;
+  --app-text-secondary: #b8afa2;
+  --app-text-muted: #8f887d;
+
+  --app-border: rgba(234, 225, 209, 0.12);
+  --app-border-strong: rgba(234, 225, 209, 0.24);
+  --app-overlay: linear-gradient(
+    180deg,
+    rgba(6, 7, 8, 0.08) 0%,
+    rgba(6, 7, 8, 0.86) 100%
+  );
+  --app-overlay-soft: linear-gradient(
+    180deg,
+    rgba(17, 19, 21, 0) 0%,
+    rgba(17, 19, 21, 0.62) 100%
+  );
+
+  --app-accent: #d89a45;
+  --app-accent-strong: #f0b767;
+  --app-accent-soft: rgba(216, 154, 69, 0.16);
+  --app-success: #69b28f;
+
+  --app-grid-line: rgba(255, 255, 255, 0.06);
+  --app-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+
+  --color-background: var(--app-bg);
+  --color-panel: var(--app-surface);
+  --color-panel-solid: var(--app-surface-strong);
+  --color-panel-translucent: var(--app-surface);
+  --gray-1: var(--app-bg);
+  --gray-2: var(--app-bg-elevated);
+  --gray-3: var(--app-surface-subtle);
+  --gray-12: var(--app-text-primary);
+}

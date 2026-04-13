@@ -1,14 +1,34 @@
+// src/app/index.tsx
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './app';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
 
-const rootEl = document.getElementById('root');
+import '@radix-ui/themes/styles.css';
+import './shared/styles/global.css';
+import { routeTree } from './routeTree.gen';
+import { ThemeProvider } from './app/providers/ThemeProvider';
 
-if (rootEl) {
-  const root = ReactDOM.createRoot(rootEl);
-  root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-  );
+const deploymentBasepath = '/industrial-legacy';
+const basepath = window.location.pathname.startsWith(deploymentBasepath)
+  ? deploymentBasepath
+  : '/';
+
+const router = createRouter({
+  routeTree,
+  basepath,
+});
+
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
 }
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  </React.StrictMode>,
+);

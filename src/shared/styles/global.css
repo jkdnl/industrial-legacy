@@ -1,0 +1,228 @@
+@import './tokens.css';
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  background: var(--app-bg);
+}
+
+body {
+  margin: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 24%),
+    linear-gradient(90deg, var(--app-grid-line) 1px, transparent 1px),
+    linear-gradient(0deg, var(--app-grid-line) 1px, transparent 1px),
+    var(--app-bg);
+  background-size: auto, 24px 24px, 24px 24px, auto;
+  color: var(--app-text-primary) !important;
+  font-family:
+    'IBM Plex Sans', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  border-radius: 0 !important;
+}
+
+::selection {
+  background: var(--app-accent);
+  color: #101112;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.rt-TextFieldRoot,
+.rt-Card {
+  background: var(--app-surface) !important;
+  border-color: var(--app-border) !important;
+}
+
+.rt-TextFieldRoot {
+  min-height: 48px;
+  box-shadow: none !important;
+}
+
+.rt-TextFieldInput {
+  color: var(--app-text-primary) !important;
+}
+
+.rt-TextFieldInput::placeholder {
+  color: var(--app-text-muted) !important;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.app-shell {
+  position: relative;
+}
+
+.app-shell::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at top left, var(--app-accent-soft), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.05), transparent 22%);
+  opacity: 0.9;
+}
+
+.app-main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-frame {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 32px 20px 72px;
+  width: 100%;
+}
+
+.app-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section-header {
+  display: grid;
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--app-border);
+}
+
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--app-accent);
+}
+
+.section-kicker::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+
+.section-title {
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 3.25rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.section-copy {
+  max-width: 760px;
+  margin: 0;
+  color: var(--app-text-secondary);
+  line-height: 1.6;
+}
+
+.industrial-panel {
+  position: relative;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  box-shadow: var(--app-shadow);
+  backdrop-filter: blur(16px);
+}
+
+.industrial-panel::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px solid var(--app-border);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.industrial-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--app-accent);
+}
+
+.industrial-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.industrial-meta-item {
+  min-width: 160px;
+  padding-top: 10px;
+  border-top: 1px solid var(--app-border);
+}
+
+.industrial-meta-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--app-text-muted);
+}
+
+.industrial-meta-value {
+  color: var(--app-text-primary);
+  line-height: 1.5;
+}
+
+.object-card:hover .object-card__image {
+  transform: scale(1.045);
+}
+
+.object-card:hover .object-card__content {
+  transform: translateY(-6px);
+}
+
+.event-card:hover,
+.object-card-compact:hover {
+  transform: translateY(-6px);
+  border-color: var(--app-border-strong);
+}
+
+.object-card-compact {
+  height: 100%;
+}
+
+.tag:hover {
+  border-color: var(--app-accent);
+}
+
+@media (max-width: 768px) {
+  .app-frame {
+    padding: 20px 16px 56px;
+  }
+
+  .industrial-panel::after {
+    inset: 8px;
+  }
+}

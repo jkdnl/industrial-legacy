@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { supabase } from '../../utils/supbase';
-import { Tables } from '../supabase';
+import { Box, Flex, Heading, Text } from '@radix-ui/themes';
+import { Tables } from '../types/supabase';
+import { supabase } from '../shared/lib/supabase';
 
 export const Route = createFileRoute('/events_/$eventId')({
   component: RouteComponent,
@@ -18,72 +19,116 @@ function RouteComponent() {
   const data = Route.useLoaderData() as { event: Tables<'events'> };
 
   const { event } = data;
+  const schedule = event.start_at
+    ? new Date(event.start_at).toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+    : 'Дата уточняется';
+  const end = event.end_at
+    ? new Date(event.end_at).toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+    : 'Без финального времени';
 
   return (
-    <>
-      <div className="max-w-[1200px] h-screen m-auto py-4 flex flex-col gap-4">
-        <div
+    <Flex direction="column" gap="6">
+      <Box
+        className="industrial-panel"
+        style={{
+          padding: '28px 24px',
+          background:
+            'linear-gradient(135deg, var(--app-accent-soft), transparent 38%), var(--app-surface)',
+        }}
+      >
+        <Text className="industrial-eyebrow">Карточка мероприятия</Text>
+        <Heading
+          size="9"
           style={{
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            // backgroundSize: '100% 100%',
-            height: '400px',
-            width: '100%',
+            marginTop: 12,
+            textTransform: 'uppercase',
+            letterSpacing: '-0.05em',
+            maxWidth: 820,
           }}
-          className={`h-full flex flex-col-reverse bg-white/10`}
         >
-          <div
-            className={`flex flex-col py-2 align-center justify-center text-center h-fit w-full transition`}
+          {event?.name || 'Мероприятие'}
+        </Heading>
+        <Text
+          size="3"
+          style={{
+            display: 'block',
+            marginTop: 16,
+            maxWidth: 780,
+            color: 'var(--app-text-secondary)',
+            lineHeight: 1.7,
+          }}
+        >
+          {event.desc || 'Описание мероприятия будет добавлено позже.'}
+        </Text>
+      </Box>
+
+      <Flex direction={{ initial: 'column', lg: 'row' }} gap="6" align="stretch">
+        <Box
+          className="industrial-panel"
+          style={{
+            flex: 1.4,
+            padding: '24px 20px',
+          }}
+        >
+          <Text className="industrial-eyebrow">Описание и контекст</Text>
+          <Text
+            size="3"
+            style={{
+              display: 'block',
+              marginTop: 18,
+              color: 'var(--app-text-secondary)',
+              lineHeight: 1.8,
+              whiteSpace: 'pre-wrap',
+            }}
           >
-            <h2 className="text-4xl font-bold">{event?.name || ''}</h2>
-          </div>
-        </div>
-        <div className="flex gap-4 w-full">
-          <div className="overflow-auto h-full flex flex-col gap-4 max-w-[800px] py-4 px-2">
-            <p>{event.desc}</p>
-            <br />
-            <hr />
-            Animi minus eligendi quas dolorum facere. Quod minima excepturi
-            ipsam at nesciunt dignissimos! Perferendis mollitia repellat
-            voluptatum. Quasi eligendi esse harum sunt optio minima dolores
-            consequuntur alias. Ea, iste. Possimus aliquid error rem saepe,
-            illum quisquam cupiditate excepturi commodi officiis, ad, deserunt
-            eligendi inventore nam. Ad temporibus error perspiciatis, accusamus
-            atque recusandae itaque ea velit sunt dolores enim iure incidunt est
-            accusantium nostrum harum consectetur repudiandae beatae totam!
-            Tenetur vel eos exercitationem blanditiis, quod inventore porro sint
-            id veritatis expedita odio, dolore fuga aliquam deleniti nemo
-            aliquid rem neque maxime, delectus fugit! Iste rerum dolor, ducimus
-            praesentium quas itaque consequuntur accusantium distinctio
-            voluptatibus quidem voluptate sunt laudantium illum repellendus quis
-            debitis laborum nostrum alias fugiat vero sint aliquam officiis
-            dolores tempora. Provident, ipsum aut molestias cumque consequuntur
-            eum nesciunt autem? Cum voluptatem eos harum commodi necessitatibus
-            impedit!
-            <br />
-            <hr />
-            Animi minus eligendi quas dolorum facere. Quod minima excepturi
-            ipsam at nesciunt dignissimos! Perferendis mollitia repellat
-            voluptatum. Quasi eligendi esse harum sunt optio minima dolores
-            consequuntur alias. Ea, iste. Possimus aliquid error rem saepe,
-            illum quisquam cupiditate excepturi commodi officiis, ad, deserunt
-            eligendi inventore nam. Ad temporibus error perspiciatis, accusamus
-            atque recusandae itaque ea velit sunt dolores enim iure incidunt est
-            accusantium nostrum harum consectetur repudiandae beatae totam!
-            Tenetur vel eos exercitationem blanditiis, quod inventore porro sint
-            id veritatis expedita odio, dolore fuga aliquam deleniti nemo
-            aliquid rem neque maxime, delectus fugit! Iste rerum dolor, ducimus
-            praesentium quas itaque consequuntur accusantium distinctio
-            voluptatibus quidem voluptate sunt laudantium illum repellendus quis
-            debitis laborum nostrum alias fugiat vero sint aliquam officiis
-            dolores tempora. Provident, ipsum aut molestias cumque consequuntur
-            eum nesciunt autem? Cum voluptatem eos harum commodi necessitatibus
-            impedit!
-          </div>
-          <div className="bg-white text-indigo-500 w-[400px] mb-10">dsa</div>
-        </div>
-      </div>
-    </>
+            {event.desc || 'Подробное описание будет добавлено после уточнения программы.'}
+          </Text>
+        </Box>
+
+        <Box
+          className="industrial-panel"
+          style={{
+            flex: 0.9,
+            padding: '24px 20px',
+          }}
+        >
+          <Text className="industrial-eyebrow">Служебные данные</Text>
+          <Box className="industrial-meta" style={{ marginTop: 18 }}>
+            <Box className="industrial-meta-item">
+              <Text className="industrial-meta-label">Старт</Text>
+              <Text className="industrial-meta-value">{schedule}</Text>
+            </Box>
+            <Box className="industrial-meta-item">
+              <Text className="industrial-meta-label">Финиш</Text>
+              <Text className="industrial-meta-value">{end}</Text>
+            </Box>
+            <Box className="industrial-meta-item">
+              <Text className="industrial-meta-label">Адрес</Text>
+              <Text className="industrial-meta-value">
+                {event.address || 'Адрес уточняется'}
+              </Text>
+            </Box>
+            <Box className="industrial-meta-item">
+              <Text className="industrial-meta-label">Формат</Text>
+              <Text className="industrial-meta-value">
+                {event.format_id ? `Тип #${event.format_id}` : 'Не указан'}
+              </Text>
+            </Box>
+          </Box>
+        </Box>
+      </Flex>
+    </Flex>
   );
 }

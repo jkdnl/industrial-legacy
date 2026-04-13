@@ -1,58 +1,32 @@
-import * as React from 'react';
-import { Link, Outlet, createRootRoute } from '@tanstack/react-router';
+import { Outlet, createRootRoute } from '@tanstack/react-router';
+import { Flex, Box } from '@radix-ui/themes';
+
+import { Header } from '../features/navigation/Header';
+import Footer from '../features/navigation/Footer';
 
 export const Route = createRootRoute({
-  component: RootComponent,
+  component: RootLayout,
 });
 
-function RootComponent() {
+function RootLayout() {
   return (
-    <>
-      <div className="p-2 flex gap-8 text-lg sticky top-0 align-center justify-center flex w-full">
-        <Link
-          to="/"
-          activeProps={{
-            className: 'font-bold',
-          }}
-          activeOptions={{ exact: true }}
-        >
-          Главная
-        </Link>{' '}
-        <Link
-          to="/about"
-          activeProps={{
-            className: 'font-bold',
-          }}
-        >
-          О проекте
-        </Link>{' '}
-        <Link
-          to="/objects"
-          activeProps={{
-            className: 'font-bold',
-          }}
-        >
-          Объекты
-        </Link>
-        <Link
-          to="/events"
-          activeProps={{
-            className: 'font-bold',
-          }}
-        >
-          Мероприятия
-        </Link>
-        <Link
-          to="/contants"
-          activeProps={{
-            className: 'font-bold',
-          }}
-        >
-          Контакты
-        </Link>
-      </div>
-      <hr />
-      <Outlet />
-    </>
+    <Flex direction="column" minHeight="100vh" className="app-shell">
+      <Box
+        className="app-main"
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Header />
+        <Box flexGrow="1" style={{ display: 'flex', flexDirection: 'column' }}>
+          <div className="app-frame">
+            <Outlet />
+          </div>
+        </Box>
+        <Footer />
+      </Box>
+    </Flex>
   );
 }
